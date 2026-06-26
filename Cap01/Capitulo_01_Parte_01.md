@@ -4,9 +4,6 @@
 
 ## Parte 1 -- Apresentação do Curso, Objetivos e Contextualização
 
-> **Curso:** Desenvolvimento de Sistemas\
-> **Carga Horária:** 96 horas (32 aulas de 3 horas)\
-> **Projeto Integrador:** Sistema de Gestão Comercial
 
 ------------------------------------------------------------------------
 
