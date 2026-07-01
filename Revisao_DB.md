@@ -1597,7 +1597,832 @@ Nesta aula aprendemos:
 Agora nosso banco já possui tabelas organizadas e prontas para receber informações.
 
 ---
+# 📚 Revisão de SQL com PostgreSQL e PGAdmin 4
+# Parte 2C • Inserindo Dados e Realizando as Primeiras Consultas
+
+> **Curso:** Banco de Dados com PostgreSQL
+>
+> **Professor:** Éder Silva
+>
+> **Nível:** Iniciante
+>
+> **Ferramentas utilizadas:**
+>
+> * PostgreSQL
+> * PGAdmin 4
 
 ---
 
+# 📖 Índice
+
+* Revisão
+* INSERT INTO
+* VALUES
+* Inserindo vários registros
+* SELECT
+* ORDER BY
+* LIMIT
+* Projeto Prático
+* Exercícios
+* Desafio Final
+
+---
+
+# 👋 Bem-vindo à Parte 2C
+
+Nas aulas anteriores construímos nosso banco de dados e criamos nossas primeiras tabelas.
+
+Agora chegou uma das partes mais interessantes do curso.
+
+Vamos começar a cadastrar informações e aprender como consultá-las utilizando SQL.
+
+É neste momento que o banco de dados realmente começa a ganhar vida.
+
+---
+
+# 🎯 Objetivos
+
+Ao final desta aula você será capaz de:
+
+* Inserir registros.
+* Consultar informações.
+* Ordenar resultados.
+* Limitar consultas.
+* Entender como os dados ficam armazenados.
+* Criar um pequeno banco funcional.
+
+---
+
+# 📌 Revisando
+
+Até aqui criamos a tabela:
+
+```sql
+CREATE TABLE aluno(
+
+id SERIAL PRIMARY KEY,
+
+nome VARCHAR(100) NOT NULL,
+
+idade INTEGER,
+
+ativo BOOLEAN DEFAULT TRUE
+
+);
+```
+
+Agora ela está vazia.
+
+Precisamos colocar informações nela.
+
+---
+
+# 📥 O comando INSERT INTO
+
+Para cadastrar registros utilizamos:
+
+```sql
+INSERT INTO
+```
+
+Sua estrutura é simples.
+
+```sql
+INSERT INTO nome_da_tabela
+
+(campo1, campo2)
+
+VALUES
+
+(valor1, valor2);
+```
+
+---
+
+# Primeiro Cadastro
+
+Vamos inserir nosso primeiro aluno.
+
+```sql
+INSERT INTO aluno
+
+(nome, idade)
+
+VALUES
+
+('Carlos',20);
+```
+
+Observe que não informamos o ID.
+
+O PostgreSQL fará isso automaticamente porque utilizamos:
+
+```sql
+SERIAL
+```
+
+---
+
+# O que aconteceu?
+
+O PostgreSQL armazenou:
+
+| ID | Nome | Idade |
+|----|----------------|------|
+|1|Carlos|20|
+
+O ID foi criado automaticamente.
+
+---
+
+# Inserindo novos registros
+
+Vamos adicionar mais alunos.
+
+```sql
+INSERT INTO aluno
+
+(nome, idade)
+
+VALUES
+
+('Fernanda',19);
+```
+
+```sql
+INSERT INTO aluno
+
+(nome, idade)
+
+VALUES
+
+('Lucas',22);
+```
+
+```sql
+INSERT INTO aluno
+
+(nome, idade)
+
+VALUES
+
+('Mariana',18);
+```
+
+---
+
+# Resultado
+
+Nossa tabela agora possui:
+
+| ID | Nome | Idade |
+|----|----------------|------|
+|1|Carlos|20|
+|2|Fernanda|19|
+|3|Lucas|22|
+|4|Mariana|18|
+
+---
+
+# Inserindo vários registros de uma vez
+
+Também podemos cadastrar vários registros utilizando um único comando.
+
+```sql
+INSERT INTO aluno
+
+(nome, idade)
+
+VALUES
+
+('Ana',18),
+
+('Pedro',21),
+
+('João',23),
+
+('Julia',20);
+```
+
+Muito mais rápido.
+
+---
+
+# Curiosidade
+
+Em sistemas reais é comum inserir milhares de registros de uma única vez.
+
+Importações de planilhas utilizam exatamente esse conceito.
+
+---
+
+# Como visualizar os dados?
+
+Utilizamos o comando:
+
+```sql
+SELECT
+```
+
+Ele significa:
+
+Selecionar.
+
+---
+
+# Primeiro SELECT
+
+```sql
+SELECT *
+
+FROM aluno;
+```
+
+O símbolo:
+
+```text
+*
+```
+
+significa:
+
+Todos os campos.
+
+---
+
+# Resultado
+
+| ID | Nome | Idade | Ativo |
+|----|----------------|------|--------|
+|1|Carlos|20|true|
+|2|Fernanda|19|true|
+|3|Lucas|22|true|
+|4|Mariana|18|true|
+
+---
+
+# Consultando apenas um campo
+
+Nem sempre precisamos visualizar tudo.
+
+Exemplo:
+
+```sql
+SELECT nome
+
+FROM aluno;
+```
+
+Resultado:
+
+```text
+Carlos
+
+Fernanda
+
+Lucas
+
+Mariana
+```
+
+---
+
+# Dois campos
+
+```sql
+SELECT nome, idade
+
+FROM aluno;
+```
+
+Resultado:
+
+| Nome | Idade |
+|--------|------|
+|Carlos|20|
+|Fernanda|19|
+|Lucas|22|
+|Mariana|18|
+
+---
+
+# ORDER BY
+
+Às vezes queremos ordenar os registros.
+
+Para isso utilizamos:
+
+```sql
+ORDER BY
+```
+
+---
+
+# Ordem crescente
+
+```sql
+SELECT *
+
+FROM aluno
+
+ORDER BY nome;
+```
+
+Resultado:
+
+Ana
+
+Carlos
+
+Fernanda
+
+Julia
+
+Lucas
+
+Pedro
+
+---
+
+# Ordem decrescente
+
+```sql
+SELECT *
+
+FROM aluno
+
+ORDER BY nome DESC;
+```
+
+Agora a lista será exibida de Z para A.
+
+---
+
+# Ordenando pela idade
+
+```sql
+SELECT *
+
+FROM aluno
+
+ORDER BY idade;
+```
+
+Agora o PostgreSQL organizará do menor para o maior.
+
+---
+
+# LIMIT
+
+Imagine uma tabela com milhares de registros.
+
+Nem sempre queremos visualizar tudo.
+
+Utilizamos:
+
+```sql
+LIMIT
+```
+
+---
+
+# Exemplo
+
+```sql
+SELECT *
+
+FROM aluno
+
+LIMIT 5;
+```
+
+Apenas cinco registros serão exibidos.
+
+---
+
+# Outro exemplo
+
+```sql
+SELECT nome
+
+FROM aluno
+
+LIMIT 3;
+```
+
+Resultado:
+
+Carlos
+
+Fernanda
+
+Lucas
+
+---
+
+# Exemplo com Pokémon
+
+Tabela:
+
+```text
+Pokemon
+```
+
+Inserindo:
+
+```sql
+INSERT INTO pokemon
+
+(nome,tipo,nivel)
+
+VALUES
+
+('Pikachu','Elétrico',12),
+
+('Bulbasaur','Grama',10),
+
+('Charmander','Fogo',8);
+```
+
+Consultando:
+
+```sql
+SELECT *
+
+FROM pokemon;
+```
+
+---
+
+# Exemplo com Harry Potter
+
+Tabela:
+
+```text
+Casa
+```
+
+```sql
+INSERT INTO casa
+
+(nome)
+
+VALUES
+
+('Grifinória'),
+
+('Sonserina'),
+
+('Corvinal'),
+
+('Lufa-Lufa');
+```
+
+Consulta:
+
+```sql
+SELECT *
+
+FROM casa;
+```
+
+---
+
+# Exemplo com Minecraft
+
+```sql
+INSERT INTO item
+
+(nome, quantidade)
+
+VALUES
+
+('Espada de Ferro',1),
+
+('Tocha',64),
+
+('Picareta de Diamante',1);
+```
+
+Consulta:
+
+```sql
+SELECT *
+
+FROM item;
+```
+
+---
+
+# Exemplo Loja
+
+Tabela Produto
+
+```sql
+INSERT INTO produto
+
+(nome, preco, estoque)
+
+VALUES
+
+('Mouse Gamer',199.90,15),
+
+('Teclado Mecânico',350.00,10),
+
+('Monitor 24"',899.90,8);
+```
+
+Consulta:
+
+```sql
+SELECT *
+
+FROM produto;
+```
+
+---
+
+# Projeto Guiado
+
+Agora vamos montar um pequeno sistema.
+
+Tabela:
+
+Aluno
+
+Cadastre:
+
+```text
+Carlos
+
+Fernanda
+
+Lucas
+
+Mariana
+
+João
+
+Pedro
+
+Ana
+
+Julia
+```
+
+Depois execute:
+
+```sql
+SELECT *
+
+FROM aluno;
+```
+
+---
+
+Agora execute:
+
+```sql
+SELECT nome
+
+FROM aluno;
+```
+
+Depois:
+
+```sql
+SELECT nome, idade
+
+FROM aluno;
+```
+
+Depois:
+
+```sql
+SELECT *
+
+FROM aluno
+
+ORDER BY nome;
+```
+
+Depois:
+
+```sql
+SELECT *
+
+FROM aluno
+
+ORDER BY idade;
+```
+
+Depois:
+
+```sql
+SELECT *
+
+FROM aluno
+
+LIMIT 5;
+```
+
+Observe como o resultado muda em cada consulta.
+
+---
+
+# Erros comuns
+
+❌ Esquecer as aspas.
+
+```sql
+Carlos
+```
+
+Correto:
+
+```sql
+'Carlos'
+```
+
+---
+
+❌ Esquecer ponto e vírgula.
+
+```sql
+;
+```
+
+---
+
+❌ Informar quantidade diferente de campos.
+
+Exemplo errado:
+
+```sql
+(nome,idade)
+
+VALUES
+
+('Carlos');
+```
+
+O número de valores deve ser igual ao número de campos.
+
+---
+
+# Dica
+
+Sempre escreva seus comandos organizados.
+
+Exemplo:
+
+```sql
+SELECT
+
+nome,
+
+idade
+
+FROM aluno
+
+ORDER BY nome;
+```
+
+Um código organizado facilita muito a leitura.
+
+---
+
+# Exercícios
+
+## Exercício 1
+
+Cadastre cinco professores.
+
+---
+
+## Exercício 2
+
+Cadastre cinco cursos.
+
+---
+
+## Exercício 3
+
+Cadastre cinco livros.
+
+---
+
+## Exercício 4
+
+Faça consultas utilizando:
+
+```sql
+SELECT *
+```
+
+---
+
+## Exercício 5
+
+Faça consultas utilizando:
+
+```sql
+ORDER BY
+```
+
+---
+
+## Exercício 6
+
+Mostre apenas três registros utilizando:
+
+```sql
+LIMIT
+```
+
+---
+
+# 🚀 Desafio Final
+
+Crie um pequeno banco para uma loja de informática.
+
+Tabela:
+
+```text
+Produto
+```
+
+Cadastre pelo menos:
+
+* 10 produtos.
+
+Depois execute:
+
+```sql
+SELECT *
+```
+
+Depois:
+
+```sql
+SELECT nome, preco
+```
+
+Depois:
+
+```sql
+ORDER BY preco;
+```
+
+Depois:
+
+```sql
+ORDER BY nome DESC;
+```
+
+Depois:
+
+```sql
+LIMIT 5;
+```
+
+Analise o resultado de cada consulta.
+
+---
+
+# 💡 Desafio Extra
+
+Pesquise dois novos comandos SQL que ainda não estudamos.
+
+Descubra:
+
+* Para que servem.
+* Como são utilizados.
+* Escreva um exemplo simples de cada um.
+
+---
+
+# 📌 Resumo
+
+Nesta aula aprendemos:
+
+✅ INSERT INTO
+
+✅ VALUES
+
+✅ Inserção múltipla
+
+✅ SELECT
+
+✅ ORDER BY
+
+✅ LIMIT
+
+✅ Organização das consultas
+
+Agora já conseguimos criar bancos, criar tabelas, inserir informações e realizar consultas simples.
+
+Você já domina os primeiros passos necessários para começar a desenvolver sistemas utilizando PostgreSQL.
+
+---
 
