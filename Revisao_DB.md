@@ -765,8 +765,839 @@ Nesta aula aprendemos:
 Agora estamos preparados para criar nossas primeiras tabelas.
 
 ---
+# 📚 Revisão de SQL com PostgreSQL e PGAdmin 4
+# Parte 2B • Criando Tabelas e Entendendo a Chave Primária
 
-
+> **Curso:** Banco de Dados com PostgreSQL
+>
+> **Professor:** Éder Silva
+>
+> **Nível:** Iniciante
+>
+> **Ferramentas utilizadas:**
+>
+> * PostgreSQL
+> * PGAdmin 4
 
 ---
+
+# 📖 Índice
+
+* Revisão da Aula Anterior
+* O que é uma tabela?
+* Estrutura de uma tabela
+* CREATE TABLE
+* Campos
+* Tipos de dados
+* PRIMARY KEY
+* NOT NULL
+* DEFAULT
+* Criando tabelas na prática
+* Exercícios
+* Desafio
+
+---
+
+# 👋 Bem-vindo à Parte 2B
+
+Na aula anterior criamos nosso primeiro banco de dados e conhecemos os principais tipos de dados utilizados pelo PostgreSQL.
+
+Agora vamos começar a construir nossas primeiras tabelas.
+
+É neste momento que o banco de dados começa realmente a ganhar forma.
+
+---
+
+# 🎯 Objetivos
+
+Ao final desta aula você será capaz de:
+
+* Criar tabelas utilizando SQL.
+* Definir corretamente os campos.
+* Escolher tipos de dados.
+* Criar chaves primárias.
+* Utilizar NOT NULL.
+* Utilizar DEFAULT.
+* Organizar melhor a estrutura do banco.
+
+---
+
+# 📌 Revisando
+
+Até agora temos esta estrutura:
+
+```text
+Servidor
+
+↓
+
+Banco Escola
+
+↓
+
+Schema Public
+```
+
+Agora iremos adicionar:
+
+```text
+Servidor
+
+↓
+
+Banco Escola
+
+↓
+
+Schema Public
+
+↓
+
+Tabela Aluno
+```
+
+---
+
+# 📚 O que é uma Tabela?
+
+Uma tabela é o local onde armazenamos informações de um mesmo assunto.
+
+Por exemplo.
+
+Uma escola pode possuir:
+
+* alunos;
+* professores;
+* cursos;
+* disciplinas.
+
+Cada um desses assuntos será representado por uma tabela.
+
+---
+
+# 🎓 Exemplo
+
+Tabela:
+
+```text
+Aluno
+```
+
+Ela poderá armazenar:
+
+| ID | Nome | Idade |
+|----|----------------|------|
+|1|Carlos|20|
+|2|Fernanda|19|
+|3|Lucas|22|
+
+Observe que:
+
+Cada linha representa um aluno.
+
+Cada coluna representa uma informação sobre esse aluno.
+
+---
+
+# 💡 Linha ou Registro?
+
+Esses dois nomes significam praticamente a mesma coisa.
+
+```text
+ID  Nome     Idade
+
+1   Carlos   20
+```
+
+Toda essa linha é chamada de:
+
+✅ Registro
+
+ou
+
+✅ Linha
+
+---
+
+# 💡 Coluna ou Campo?
+
+Cada informação possui um nome.
+
+```text
+ID
+
+Nome
+
+Idade
+```
+
+Cada uma dessas colunas é chamada de:
+
+Campo
+
+ou
+
+Atributo
+
+---
+
+# Analogia
+
+Imagine uma planilha do Excel.
+
+As colunas são os campos.
+
+As linhas são os registros.
+
+Quem já trabalhou com Excel normalmente aprende SQL com bastante facilidade.
+
+---
+
+# Primeiro Comando
+
+A criação de tabelas utiliza o comando:
+
+```sql
+CREATE TABLE
+```
+
+Sua estrutura básica é:
+
+```sql
+CREATE TABLE nome_da_tabela(
+
+campo tipo,
+
+campo tipo,
+
+campo tipo
+
+);
+```
+
+---
+
+# Criando nossa primeira tabela
+
+Vamos criar uma tabela para armazenar alunos.
+
+```sql
+CREATE TABLE aluno(
+
+id SERIAL,
+
+nome VARCHAR(100),
+
+idade INTEGER
+
+);
+```
+
+Agora já temos uma tabela.
+
+---
+
+# O que significa cada linha?
+
+```sql
+CREATE TABLE aluno(
+```
+
+Cria uma tabela chamada aluno.
+
+---
+
+```sql
+id SERIAL,
+```
+
+Cria um campo chamado id.
+
+O PostgreSQL preencherá esse valor automaticamente.
+
+---
+
+```sql
+nome VARCHAR(100),
+```
+
+Campo destinado ao nome do aluno.
+
+Aceita até 100 caracteres.
+
+---
+
+```sql
+idade INTEGER
+```
+
+Campo destinado à idade.
+
+Aceita apenas números inteiros.
+
+---
+
+```sql
+);
+```
+
+Finaliza a criação da tabela.
+
+---
+
+# Executando o comando
+
+Abra o:
+
+**Query Tool**
+
+Cole o código.
+
+Clique em:
+
+▶ Execute
+
+Se tudo estiver correto aparecerá:
+
+```text
+Query returned successfully.
+```
+
+---
+
+# Atualizando o PGAdmin
+
+Depois da criação da tabela.
+
+Clique com o botão direito em:
+
+```text
+Tables
+```
+
+Depois:
+
+```text
+Refresh
+```
+
+A tabela aparecerá na lista.
+
+---
+
+# Visualizando a estrutura
+
+```text
+Aluno
+
+ID
+
+Nome
+
+Idade
+```
+
+Neste momento ainda não existem registros.
+
+Criamos apenas a estrutura.
+
+---
+
+# O Problema
+
+Imagine esta situação.
+
+```text
+Nome
+
+Carlos
+
+Carlos
+
+Carlos
+```
+
+Qual deles é qual?
+
+Como saber?
+
+Precisamos de um identificador único.
+
+---
+
+# Chave Primária
+
+A chave primária é o campo responsável por identificar cada registro.
+
+Ela nunca poderá repetir.
+
+---
+
+# Exemplo
+
+```text
+ID
+
+1
+
+2
+
+3
+
+4
+
+5
+```
+
+Nunca existirão dois registros com o mesmo ID.
+
+---
+
+# Atualizando nossa tabela
+
+Agora vamos criar corretamente.
+
+```sql
+CREATE TABLE aluno(
+
+id SERIAL PRIMARY KEY,
+
+nome VARCHAR(100),
+
+idade INTEGER
+
+);
+```
+
+Agora o campo id tornou-se nossa chave primária.
+
+---
+
+# O que significa PRIMARY KEY?
+
+PRIMARY
+
+↓
+
+Principal
+
+KEY
+
+↓
+
+Chave
+
+Ela é a principal identificação de cada registro.
+
+---
+
+# Regras da Chave Primária
+
+Uma chave primária:
+
+✅ Nunca se repete.
+
+✅ Nunca pode ser nula.
+
+✅ Identifica exclusivamente um registro.
+
+---
+
+# Exemplo
+
+| ID | Nome |
+|----|----------------|
+|1|Carlos|
+|2|Carlos|
+|3|Carlos|
+
+Os nomes podem repetir.
+
+O ID nunca.
+
+---
+
+# Curiosidade
+
+Quase todos os sistemas do mundo utilizam uma chave primária.
+
+Mesmo que você nunca a veja.
+
+Ela existe.
+
+---
+
+# SERIAL + PRIMARY KEY
+
+É a combinação mais utilizada.
+
+```sql
+id SERIAL PRIMARY KEY
+```
+
+O PostgreSQL:
+
+* cria o campo;
+* gera números automaticamente;
+* impede repetições.
+
+---
+
+# O que é NOT NULL?
+
+Alguns campos são obrigatórios.
+
+Exemplo.
+
+Um aluno precisa possuir nome.
+
+Não faz sentido cadastrar um aluno sem nome.
+
+Para isso usamos:
+
+```sql
+NOT NULL
+```
+
+---
+
+# Exemplo
+
+```sql
+CREATE TABLE aluno(
+
+id SERIAL PRIMARY KEY,
+
+nome VARCHAR(100) NOT NULL,
+
+idade INTEGER
+
+);
+```
+
+Agora o nome tornou-se obrigatório.
+
+---
+
+# O que acontece?
+
+Tentando inserir:
+
+```text
+Nome vazio
+```
+
+O PostgreSQL exibirá um erro.
+
+Isso evita informações incompletas.
+
+---
+
+# O que é DEFAULT?
+
+Às vezes queremos que um campo receba automaticamente um valor.
+
+Utilizamos:
+
+```sql
+DEFAULT
+```
+
+---
+
+# Exemplo
+
+```sql
+ativo BOOLEAN DEFAULT TRUE
+```
+
+Sempre que um novo registro for criado.
+
+O campo ativo receberá automaticamente:
+
+```text
+TRUE
+```
+
+---
+
+# Exemplo Completo
+
+```sql
+CREATE TABLE aluno(
+
+id SERIAL PRIMARY KEY,
+
+nome VARCHAR(100) NOT NULL,
+
+idade INTEGER,
+
+ativo BOOLEAN DEFAULT TRUE
+
+);
+```
+
+Observe que nossa tabela já está muito mais completa.
+
+---
+
+# Exemplo com Pokémon
+
+```sql
+CREATE TABLE pokemon(
+
+id SERIAL PRIMARY KEY,
+
+nome VARCHAR(50) NOT NULL,
+
+tipo VARCHAR(30),
+
+nivel INTEGER DEFAULT 1
+
+);
+```
+
+Todo novo Pokémon começará no nível 1.
+
+---
+
+# Exemplo com Harry Potter
+
+```sql
+CREATE TABLE casa(
+
+id SERIAL PRIMARY KEY,
+
+nome VARCHAR(50) NOT NULL
+
+);
+```
+
+Tabela simples.
+
+Muito comum em bancos relacionais.
+
+---
+
+# Exemplo com Minecraft
+
+```sql
+CREATE TABLE item(
+
+id SERIAL PRIMARY KEY,
+
+nome VARCHAR(80),
+
+quantidade INTEGER DEFAULT 1
+
+);
+```
+
+Todo novo item terá quantidade inicial igual a 1.
+
+---
+
+# Exemplo Loja
+
+```sql
+CREATE TABLE produto(
+
+id SERIAL PRIMARY KEY,
+
+nome VARCHAR(100) NOT NULL,
+
+preco NUMERIC(10,2),
+
+estoque INTEGER DEFAULT 0
+
+);
+```
+
+Observe como a estrutura começa a se parecer com um sistema real.
+
+---
+
+# Organização
+
+Uma boa tabela possui:
+
+✔ Nome claro.
+
+✔ Campos organizados.
+
+✔ Tipos corretos.
+
+✔ Chave primária.
+
+✔ Campos obrigatórios quando necessário.
+
+Isso facilita muito a manutenção do sistema.
+
+---
+
+# Dica
+
+Evite nomes como:
+
+```text
+Tabela1
+
+TabelaNova
+
+Teste
+
+Dados
+```
+
+Prefira nomes significativos.
+
+```text
+Aluno
+
+Produto
+
+Cliente
+
+Funcionario
+
+Pedido
+```
+
+---
+
+# Exercícios
+
+## Exercício 1
+
+Crie uma tabela chamada:
+
+```text
+Professor
+```
+
+Campos:
+
+* id
+* nome
+* salário
+
+---
+
+## Exercício 2
+
+Crie uma tabela chamada:
+
+```text
+Curso
+```
+
+Campos:
+
+* id
+* nome
+* duração
+
+---
+
+## Exercício 3
+
+Crie uma tabela chamada:
+
+```text
+Livro
+```
+
+Campos:
+
+* id
+* título
+* autor
+* ano
+
+---
+
+## Exercício 4
+
+Adicione:
+
+```text
+DEFAULT
+```
+
+em pelo menos um campo.
+
+---
+
+## Exercício 5
+
+Adicione:
+
+```text
+NOT NULL
+```
+
+nos campos obrigatórios.
+
+---
+
+# 🚀 Desafio
+
+Crie a estrutura de um sistema para uma clínica veterinária.
+
+Tabela:
+
+```text
+Animal
+```
+
+Campos:
+
+* id
+* nome
+* espécie
+* raça
+* peso
+* nascimento
+* ativo
+
+Escolha corretamente o tipo de dado de cada campo.
+
+Depois responda:
+
+Quais campos deveriam possuir:
+
+* PRIMARY KEY
+* NOT NULL
+* DEFAULT
+
+Explique o motivo de cada escolha.
+
+---
+
+# 📌 Resumo
+
+Nesta aula aprendemos:
+
+✅ CREATE TABLE
+
+✅ Estrutura de tabelas
+
+✅ Campos
+
+✅ Tipos de dados
+
+✅ PRIMARY KEY
+
+✅ SERIAL
+
+✅ NOT NULL
+
+✅ DEFAULT
+
+Agora nosso banco já possui tabelas organizadas e prontas para receber informações.
+
+---
+
+---
+
 
