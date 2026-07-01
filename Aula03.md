@@ -554,4 +554,3 @@ Na **Parte 1B** vou mostrar:
 
 ---
 
-**Fim da Parte 1A**
