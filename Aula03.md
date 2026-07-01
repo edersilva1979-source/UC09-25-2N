@@ -1,7 +1,7 @@
 # 📚 Revisão de SQL com PostgreSQL e PGAdmin 4
 # Parte 1A • Introdução e História dos Bancos de Dados
 
-> **Curso:** Banco de Dados com PostgreSQL
+> **Revisão:** Banco de Dados com PostgreSQL
 >
 > **Professor:** Éder Silva
 >
