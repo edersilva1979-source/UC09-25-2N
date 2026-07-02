@@ -1,9 +1,6 @@
 # 📚 Revisão de SQL com PostgreSQL e PGAdmin 4
 # Parte 3A • Filtrando Dados com WHERE
 
-> **Curso:** Banco de Dados com PostgreSQL
-
-
 ---
 
 # 📖 Índice
@@ -3114,6 +3111,7 @@ Você aprendeu:
 ✅ IS NULL.
 
 Agora você possui uma base sólida em SQL e já consegue construir pequenos sistemas utilizando PostgreSQL.
+
 
 ---
 
