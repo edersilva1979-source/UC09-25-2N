@@ -1,4 +1,4 @@
-# 🎮 Trabalho Prático de POO com TypeScript
+# 🎮 Trabalho Prático de POO com TypeScript em Dupla
 # Locadora de Games: Sistema de Locação de Jogos
 
 ## 🧑‍🏫 Apresentação
@@ -171,7 +171,7 @@ Crie um arquivo chamado:
 index.ts
 ```
 
-Depois cole o código abaixo:
+Depois cole o código abaixo e complete com tudo que pede no exercício:
 
 ```typescript
 class JogoGame {
@@ -183,160 +183,8 @@ class JogoGame {
     public disponivel: boolean = true
   ) {}
 
-  locar(): void {
-    if (!this.disponivel) {
-      console.log(`❌ O jogo ${this.nome} já está locado.`);
-      return;
-    }
-
-    this.disponivel = false;
-    console.log(`🎮 O jogo ${this.nome} foi locado com sucesso!`);
-  }
-
-  devolver(): void {
-    this.disponivel = true;
-    console.log(`✅ O jogo ${this.nome} foi devolvido e está disponível novamente.`);
-  }
-
-  exibirDados(): void {
-    console.log("====================================");
-    console.log(`🎮 Jogo: ${this.nome}`);
-    console.log(`🕹️ Plataforma: ${this.plataforma}`);
-    console.log(`📂 Gênero: ${this.genero}`);
-    console.log(`💰 Valor da diária: R$ ${this.valorDiaria.toFixed(2)}`);
-    console.log(`📌 Disponível: ${this.disponivel ? "Sim" : "Não"}`);
-    console.log("====================================");
-  }
-}
-
-class Cliente {
-  constructor(
-    public nome: string,
-    public idade: number,
-    public telefone: string,
-    public email: string
-  ) {}
-
-  exibirDados(): void {
-    console.log("====================================");
-    console.log(`👤 Cliente: ${this.nome}`);
-    console.log(`🎂 Idade: ${this.idade} anos`);
-    console.log(`📞 Telefone: ${this.telefone}`);
-    console.log(`📧 E-mail: ${this.email}`);
-    console.log("====================================");
-  }
-}
-
-class Locacao {
-  constructor(
-    public jogo: JogoGame,
-    public cliente: Cliente,
-    public dataLocacao: string,
-    public dataDevolucao: string
-  ) {
-    this.jogo.locar();
-  }
-
-  estaAtrasada(dataAtual: string): boolean {
-    const atual = new Date(dataAtual);
-    const devolucao = new Date(this.dataDevolucao);
-
-    return atual > devolucao;
-  }
-
-  calcularDiasLocados(): number {
-    const inicio = new Date(this.dataLocacao);
-    const fim = new Date(this.dataDevolucao);
-
-    const diferencaTempo = fim.getTime() - inicio.getTime();
-    const dias = diferencaTempo / (1000 * 60 * 60 * 24);
-
-    return dias;
-  }
-
-  calcularValorPrevisto(): number {
-    return this.calcularDiasLocados() * this.jogo.valorDiaria;
-  }
-
-  exibirResumo(dataAtual: string): void {
-    console.log("\n====================================");
-    console.log("🎮 RESUMO DA LOCAÇÃO");
-    console.log("====================================");
-    console.log(`Jogo locado: ${this.jogo.nome}`);
-    console.log(`Plataforma: ${this.jogo.plataforma}`);
-    console.log(`Gênero: ${this.jogo.genero}`);
-    console.log("------------------------------------");
-    console.log(`Cliente: ${this.cliente.nome}`);
-    console.log(`Telefone: ${this.cliente.telefone}`);
-    console.log(`E-mail: ${this.cliente.email}`);
-    console.log("------------------------------------");
-    console.log(`Data da locação: ${this.dataLocacao}`);
-    console.log(`Previsão de devolução: ${this.dataDevolucao}`);
-    console.log(`Valor previsto: R$ ${this.calcularValorPrevisto().toFixed(2)}`);
-    console.log("------------------------------------");
-
-    if (this.estaAtrasada(dataAtual)) {
-      console.log("🚨 Situação: Locação atrasada!");
-      console.log("O cliente entrou no modo chefão final da enrolação. 😂");
-    } else {
-      console.log("✅ Situação: Locação dentro do prazo.");
-      console.log("Cliente responsável desbloqueou conquista rara. 🏆");
-    }
-
-    console.log("====================================\n");
-  }
-}
-
-const jogo1 = new JogoGame(
-  "The Legend of Zelda: Tears of the Kingdom",
-  "Nintendo Switch",
-  "Aventura",
-  12.5
-);
-
-const jogo2 = new JogoGame(
-  "Marvel's Spider-Man 2",
-  "PlayStation 5",
-  "Ação",
-  15
-);
-
-const cliente1 = new Cliente(
-  "Lucas Pereira",
-  17,
-  "(51) 99999-0000",
-  "lucas@email.com"
-);
-
-const cliente2 = new Cliente(
-  "Mariana Souza",
-  18,
-  "(51) 98888-1111",
-  "mariana@email.com"
-);
-
-const locacao1 = new Locacao(
-  jogo1,
-  cliente1,
-  "2026-07-01",
-  "2026-07-05"
-);
-
-const locacao2 = new Locacao(
-  jogo2,
-  cliente2,
-  "2026-07-01",
-  "2026-07-10"
-);
-
-locacao1.exibirResumo("2026-07-08");
-locacao2.exibirResumo("2026-07-08");
-
-jogo1.exibirDados();
-jogo2.exibirDados();
 ```
 
----
 
 # ▶️ Como Executar
 
