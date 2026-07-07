@@ -1,4 +1,4 @@
-# Aula 3: Conectando Java ao PostgreSQL
+# Conectando Java ao PostgreSQL
 
 ## Objetivo da aula
 
