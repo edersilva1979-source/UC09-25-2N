@@ -2,7 +2,7 @@
 
 ## Objetivo da aula
 
-Nesta aula vou evoluir nosso projeto para uma versão gráfica utilizando
+Nesta aula vamos evoluir nosso projeto para uma versão gráfica utilizando
 Java, NetBeans, JFrame Form, PostgreSQL e JDBC. Utilizaremos o banco de
 dados **escola** para desenvolver uma tela simples de cadastro de
 alunos.
@@ -177,7 +177,7 @@ PreparedStatement
 PostgreSQL
 ```
 
-## O que aprendi
+## O que aprendemos
 
 -   Criar um JFrame Form.
 -   Utilizar JLabel, JTextField e JButton.
