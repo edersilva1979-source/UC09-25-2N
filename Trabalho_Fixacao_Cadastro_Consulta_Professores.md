@@ -35,7 +35,7 @@ O banco de dados deverá ser criado no PostgreSQL.
 Nome do banco:
 
 ```text
-escola
+escolaGrafica
 ```
 
 Caso o banco já exista, ele poderá ser reutilizado.
