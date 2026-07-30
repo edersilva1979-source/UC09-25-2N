@@ -35,7 +35,7 @@ public class ConsultaAluno extends javax.swing.JFrame {
         txtTurma.setEnabled(false);
         txtEmail.setEnabled(false);
         
-        btnEditar.setEnabled(false);
+        btnAlterar.setEnabled(false);
         btnExcluir.setEnabled(false);
     }
     
@@ -44,7 +44,7 @@ public class ConsultaAluno extends javax.swing.JFrame {
         txtTurma.setEnabled(true);
         txtEmail.setEnabled(true);
         
-        btnEditar.setEnabled(true);
+        btnAlterar.setEnabled(true);
         btnExcluir.setEnabled(true);
     }
     
@@ -73,7 +73,7 @@ public class ConsultaAluno extends javax.swing.JFrame {
         txtTurma = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         btnLocalizar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnAtualizar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
@@ -94,9 +94,11 @@ public class ConsultaAluno extends javax.swing.JFrame {
         btnLocalizar.setText("🔎 Localizar");
         btnLocalizar.addActionListener(this::btnLocalizarActionPerformed);
 
-        btnEditar.setText("🖊️ Editar");
+        btnAlterar.setText("🖊️ Alterar");
+        btnAlterar.addActionListener(this::btnAlterarActionPerformed);
 
         btnExcluir.setText("🗑️ Excluir");
+        btnExcluir.addActionListener(this::btnExcluirActionPerformed);
 
         btnAtualizar.setText("🔄️ Atualizar");
 
@@ -138,7 +140,7 @@ public class ConsultaAluno extends javax.swing.JFrame {
                                 .addComponent(btnLocalizar))
                             .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -164,7 +166,7 @@ public class ConsultaAluno extends javax.swing.JFrame {
                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEditar)
+                    .addComponent(btnAlterar)
                     .addComponent(btnExcluir)
                     .addComponent(btnAtualizar)
                     .addComponent(btnLimpar)
@@ -202,8 +204,78 @@ public class ConsultaAluno extends javax.swing.JFrame {
             
        } catch (NumberFormatException erro){
            JOptionPane.showMessageDialog(this,"Digite um ID númerico Válido.");
+           limparCampos();
        }
     }//GEN-LAST:event_btnLocalizarActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+         if (txtId.getText().trim().isEmpty()
+              || txtNome.getText().trim().isEmpty()
+              || txtTurma.getText().trim().isEmpty()
+              || txtEmail.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Preecha todos os campos");
+            return;
+         }
+         
+         int resposta = JOptionPane.showConfirmDialog(
+                         this,
+                         "Deseja alterar os dados deste aluno?",
+                         "Confirmação",
+                         JOptionPane.YES_NO_OPTION
+                         );
+         if (resposta != JOptionPane.YES_OPTION){
+            return;
+         }
+         
+         int id = Integer.parseInt(txtId.getText().trim());
+         String nome = txtNome.getText().trim();
+         String turma = txtTurma.getText().trim();
+         String email = txtEmail.getText().trim();
+         
+         Aluno aluno = new Aluno();
+         
+         boolean alterado = aluno.alterar(id, nome, turma, email);
+         
+         if (alterado){
+            JOptionPane.showMessageDialog(this, "Aluno Alterado com Sucesso!");
+            carregarTabela();
+            limparCampos();
+         } else {
+             JOptionPane.showMessageDialog(this,"Não foi possivel alterar o Aluno");
+         }
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+            if (txtId.getText().trim().isEmpty()){
+               JOptionPane.showMessageDialog(this,"Prrencha o Campo ID");
+               return;
+            }
+            int resposta = JOptionPane.showConfirmDialog(
+                                       this,
+                                       "Deseja realmente excluir este Aluno?",
+                                       "Confirmação",
+                                       JOptionPane.YES_NO_OPTION);
+            
+            if (resposta != JOptionPane.YES_OPTION){
+                return;
+            }
+            int id = Integer.parseInt(txtId.getText().trim());
+            
+            Aluno aluno = new Aluno();
+            
+            boolean excluido = aluno.excluir(id);
+            
+            if (excluido){
+                JOptionPane.showMessageDialog(this,"Aluno Excluido com Sucesso!");
+                carregarTabela();
+                limparCampos();
+                desativarCampos();
+            } else{
+              JOptionPane.showMessageDialog(this,"Não foi possivel excluir este Aluno");
+            }
+            
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
 
     public static void main(String args[]) {
@@ -212,8 +284,8 @@ public class ConsultaAluno extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnAtualizar;
-    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnLimpar;

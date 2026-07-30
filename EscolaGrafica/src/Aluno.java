@@ -156,5 +156,59 @@ public class Aluno {
         return null;
     }
     
-    
-}
+    public boolean alterar(int id, String nome, String turma, String email){
+        String sql = "UPDATE aluno "
+                    + "SET nome = ?, turma = ?, email = ? "
+                    + "WHERE id = ?";
+        
+        try {
+            Connection conexao = Conexao.conectar();
+            if (conexao == null){
+                return false;
+            }
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setString(1,nome);
+            stmt.setString(2,turma);
+            stmt.setString(3,email);
+            stmt.setInt(4, id);
+            
+            int linhas = stmt.executeUpdate();
+            stmt.close();
+            conexao.close();  
+            return linhas > 0;
+        }
+        catch( SQLException erro){
+            System.out.println("Erro ao Alterar aluno");
+            System.out.println(erro.getMessage());
+            return false;
+        }
+            
+        }
+   
+    public boolean excluir(int id){
+        String sql = "DELETE FROM aluno WHERE id = ?";
+        try {
+            Connection conexao = Conexao.conectar();
+            if (conexao == null){
+                return false;
+            }
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, id);
+            
+            int linhas = stmt.executeUpdate();
+            
+            stmt.close();
+            conexao.close();
+            
+            return linhas > 0;
+        }
+        catch (SQLException erro){
+            System.out.println("Erro ao Excluir Aluno");
+            System.out.println(erro.getMessage());
+            return false;
+        }
+        }
+            
+        
+    }
+   
