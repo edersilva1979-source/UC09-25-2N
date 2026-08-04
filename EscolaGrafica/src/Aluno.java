@@ -156,6 +156,93 @@ public class Aluno {
         return null;
     }
     
+    
+    public ArrayList<Aluno> localizar(String tipo, String valor){
+    
+        ArrayList<Aluno> lista = new ArrayList<>();
+        
+        String sql;
+        
+        switch (tipo){
+            
+            case"ID":
+                sql = """
+                      SELECT id, nome, turma,email FROM aluno
+                      WHERE id = ?
+                      ORDER BY id
+                      """;
+                break;
+                
+            case "Nome":
+                sql = """
+                      SELECT id, nome, turma, email FROM aluno
+                      WHERE nome ILIKE ?
+                      OREDER BY turma, nome
+                      """;
+                break;
+            case "Turma":
+                sql = """
+                      SELECT id, nome, turma,email FROM aluno
+                      WHERE turma ILIKE ?
+                      ORDER BY turma, nome
+                      """;
+            break ;
+            
+            case "Email":
+                sql = """
+                      SELECT id, nome, turma, email FROM aluno
+                      WHERE email ILIKE ?
+                      ORDER BY email
+                      """;
+                break;
+                
+            default: return lista;    
+        }
+        
+        try {
+            
+            Connection conexao = Conexao.conectar();
+            
+            if (conexao == null) {
+                return lista;
+            }
+            
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            
+            if (tipo.equals("Id")) {
+               int id = Integer.parseInt(valor);
+               stmt.setInt(1,id);
+            } else {
+               stmt.setString(1, "%" + valor + "%");
+            }
+            
+            ResultSet resultado = stmt.executeQuery();
+            
+            while (resultado.next()){
+                Aluno aluno = new Aluno();
+                aluno.setId(resultado.getInt("id"));
+                aluno.setNome(resultado.getString("nome"));
+                aluno.setTurma(resultado.getString("turma"));
+                aluno.setEmail(resultado.getString("email"));
+                
+                lista.add(aluno);
+            }
+            resultado.close();
+            stmt.close();
+            conexao.close();
+        } 
+        
+        catch ( NumberFormatException erro){
+              System.out.println("O ID deve conter apenas números");
+        } 
+        
+        catch (SQLException erro) {
+            System.out.println("Erro ao localizar aluno: " + erro.getMessage());
+        } 
+        return lista;
+    }
+    
+    
     public boolean alterar(int id, String nome, String turma, String email){
         String sql = "UPDATE aluno "
                     + "SET nome = ?, turma = ?, email = ? "
