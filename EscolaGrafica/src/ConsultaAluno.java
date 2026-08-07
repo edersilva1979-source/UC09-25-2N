@@ -85,7 +85,7 @@ public class ConsultaAluno extends javax.swing.JFrame {
         btnFechar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaAlunos = new javax.swing.JTable();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbTipoConsulta = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -133,9 +133,9 @@ public class ConsultaAluno extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabelaAlunos);
 
-        jComboBox2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nome", "Turma", "Email" }));
-        jComboBox2.setSelectedIndex(-1);
+        cbTipoConsulta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cbTipoConsulta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nome", "Turma", "Email" }));
+        cbTipoConsulta.setSelectedIndex(-1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,7 +162,7 @@ public class ConsultaAluno extends javax.swing.JFrame {
                                 .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbTipoConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -176,9 +176,10 @@ public class ConsultaAluno extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnLocalizar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtId)
-                    .addComponent(jComboBox2))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtId)
+                        .addComponent(btnLocalizar))
+                    .addComponent(cbTipoConsulta))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -200,33 +201,51 @@ public class ConsultaAluno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
-       if(txtId.getText().trim().isEmpty()){
-          JOptionPane.showMessageDialog(this,"Digite o ID do Aluno");
-          return;
+       String tipo = cbTipoConsulta.getSelectedItem().toString();
+             
+       String valor = txtId.getText().trim();
+       
+           
+       if (valor.isEmpty()) {
+           JOptionPane.showMessageDialog(this, "Informe um valor para a Pesquisa.",
+                                      "Campo Obrigatório",JOptionPane.WARNING_MESSAGE);
+           txtId.requestFocus();
+           return;
        }
        
-       try{
-         
-           int id = Integer.parseInt(txtId.getText().trim());
-           Aluno aluno = new Aluno();
-           
-           Aluno encontrado = aluno.buscarPorId(id);
-           
-           if (encontrado != null){
-               txtNome.setText(encontrado.getNome());
-               txtTurma.setText(encontrado.getTurma());
-               txtEmail.setText(encontrado.getEmail());
-               ativarCampos();
-               JOptionPane.showMessageDialog(this, "Aluno localizado com sucuesso");
-           } else{
-               JOptionPane.showMessageDialog(this, "Aluno não Encontrado");
-               limparCampos();
-           }
-            
+       if (tipo.equals("ID")) {
+           try{
+              Integer.parseInt(valor);  
        } catch (NumberFormatException erro){
-           JOptionPane.showMessageDialog(this,"Digite um ID númerico Válido.");
-           limparCampos();
+           JOptionPane.showMessageDialog(this,"Para Pesquisar por ID, digite apenas nuemros",
+                   "ID Inválido", JOptionPane.WARNING_MESSAGE);
+           txtId.requestFocus();
+           return ;
        }
+       }
+       
+       Aluno aluno = new Aluno();
+       
+       ArrayList<Aluno> lista = aluno.localizar(tipo, valor);
+       
+       if (lista.isEmpty()){
+           JOptionPane.showMessageDialog(this,"Nenhum aluno foi encontrado.",
+                    "Resultado da Consulta",
+                    JOptionPane.INFORMATION_MESSAGE);
+           txtId.requestFocus();
+           return;
+       }
+       
+       if (lista.size() == 1){
+           tabelaAlunos.setRowSelectionInterval(0,0);
+       }
+       
+       JOptionPane.showMessageDialog(this,lista.size() + " aluno(s) encontrado(s)",
+                                      "Consulta Concluida",
+                                      JOptionPane.INFORMATION_MESSAGE);
+       
+       preencherTabela(lista);
+       
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
@@ -298,6 +317,24 @@ public class ConsultaAluno extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnExcluirActionPerformed
 
+    private void preencherTabela(ArrayList<Aluno> lista){
+        
+        DefaultTableModel modelo = (DefaultTableModel) tabelaAlunos.getModel();
+        modelo.setRowCount(0);
+        
+        for (Aluno aluno : lista){
+             modelo.addRow(new Object[]{
+                  aluno.getId(),
+                  aluno.getNome(),
+                  aluno.getTurma(),
+                  aluno.getEmail()}
+             );
+        }
+    }
+    
+    
+    
+    
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
@@ -345,7 +382,7 @@ public class ConsultaAluno extends javax.swing.JFrame {
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnLocalizar;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> cbTipoConsulta;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaAlunos;
     private javax.swing.JTextField txtEmail;
