@@ -1,6 +1,6 @@
 # Projeto FerragemGK
 
-![Logo](Logo_completo.png)
+<img src="Logo_completo.png" width="300" alt="Exemplo">
 
 ## Java Swing com PostgreSQL
 
