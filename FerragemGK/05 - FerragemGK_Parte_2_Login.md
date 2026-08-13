@@ -1,6 +1,6 @@
-<div align="center">
-# Projeto FerragemGK
 
+# Projeto FerragemGK
+<div align="center">
 <img src="Logo.png" width="200" alt="Exemplo">
 </div>
 # Parte 2: Criando o Login com Java Swing e PostgreSQL
