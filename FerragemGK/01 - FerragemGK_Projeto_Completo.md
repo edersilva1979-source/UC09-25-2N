@@ -1,4 +1,4 @@
-# Projeto Integrador FerragemGK
+# Projeto FerragemGK
 
 ![Logo](Logo_completo.png)
 
