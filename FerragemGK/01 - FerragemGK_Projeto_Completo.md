@@ -1,6 +1,6 @@
 # Projeto Integrador FerragemGK
 
-![Logo](FerragemGK/Logo_completo.png)
+![Logo](Logo_completo.png)
 
 ## Java Swing com PostgreSQL
 
