@@ -1,4 +1,4 @@
-# Projeto FerragemGK
+<h1 align="center">Projeto FerragemGK</h1>
 
 <div align="center">
 <img src="Logo_completo.png" width="300" alt="Exemplo">
