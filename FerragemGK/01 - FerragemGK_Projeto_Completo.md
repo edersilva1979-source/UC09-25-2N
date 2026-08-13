@@ -1,7 +1,8 @@
 # Projeto FerragemGK
 
+<div align="center">
 <img src="Logo_completo.png" width="300" alt="Exemplo">
-
+</div>
 ## Java Swing com PostgreSQL
 
 Neste projeto, nós vamos desenvolver juntos uma aplicação completa para uma loja de ferragens utilizando Java, Java Swing, NetBeans e PostgreSQL.
