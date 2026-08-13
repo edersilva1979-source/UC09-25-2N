@@ -1,5 +1,7 @@
 # Projeto FerragemGK
-
+<div align="center">
+<img src="Logo.png" width="200" alt="Exemplo">
+</div>
 # Parte 2: Criando o Login com Java Swing e PostgreSQL
 
 Nesta etapa, nós vamos criar juntos o primeiro módulo funcional do nosso sistema FerragemGK.
