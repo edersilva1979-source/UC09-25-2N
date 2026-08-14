@@ -215,36 +215,6 @@ CREATE TABLE contas_receber (
         CHECK (status IN ('ABERTA', 'RECEBIDA', 'CANCELADA'))
 );
 
-INSERT INTO usuario (
-    nome,
-    login,
-    senha,
-    nivel,
-    ativo
-)
-VALUES (
-    'Administrador',
-    'master',
-    '1234',
-    'MASTER',
-    TRUE
-)
-
-
-INSERT INTO usuario (
-    nome,
-    login,
-    senha,
-    nivel,
-    ativo
-)
-VALUES (
-    'Usuario Teste',
-    'user',
-    '1234',
-    'USER',
-    TRUE
-)
 
 
 COMMIT;
