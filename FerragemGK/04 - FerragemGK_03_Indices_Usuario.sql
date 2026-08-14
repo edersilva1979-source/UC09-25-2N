@@ -26,3 +26,21 @@ VALUES (
     'MASTER',
     TRUE
 );
+
+
+INSERT INTO usuario (
+    nome,
+    login,
+    senha,
+    nivel,
+    ativo
+)
+VALUES (
+    'Usuario Teste',
+    'user',
+    '1234',
+    'USER',
+    TRUE
+)
+
+
