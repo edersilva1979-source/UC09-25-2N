@@ -771,10 +771,10 @@ public List<Fornecedor> pesquisar(
 <h1 align="center">Telas</h1>
 
 <div align="center">
-<img src="fornecedor01.png" width="300" alt="Exemplo">
+<img src="fronecedor01.png" width="300" alt="Exemplo">
 </div>
 <div align="center">
-<img src="fornecedor02.png" width="300" alt="Exemplo">
+<img src="fronecedor02.png" width="300" alt="Exemplo">
 </div>
 # 14. Criando a FrmFornecedor
 
