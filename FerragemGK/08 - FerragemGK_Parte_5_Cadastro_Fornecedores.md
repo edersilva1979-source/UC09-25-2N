@@ -1,4 +1,8 @@
-# Projeto FerragemGK
+<h1 align="center">Projeto FerragemGK</h1>
+
+<div align="center">
+<img src="Logo.png" width="200" alt="Exemplo">
+</div>
 
 # Parte 5: Cadastro de Fornecedores com CRUD Completo
 
