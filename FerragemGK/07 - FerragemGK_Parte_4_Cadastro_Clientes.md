@@ -1087,6 +1087,17 @@ Assim, nossa tela poderá ser fechada, minimizada, maximizada e redimensionada d
 
 ---
 
+<h1 align="center">Telas</h1>
+
+<div align="center">
+<img src="Cliente01.png" width="200" alt="Exemplo">
+</div>
+<div align="center">
+<img src="Cliente02.png" width="200" alt="Exemplo">
+</div>
+
+
+
 # 19. Criando o JTabbedPane
 
 Dentro da `FrmCliente`, nós vamos adicionar:
