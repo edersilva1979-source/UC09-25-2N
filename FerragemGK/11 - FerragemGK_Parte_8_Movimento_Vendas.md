@@ -1,4 +1,8 @@
-# Projeto FerragemGK
+<h1 align="center">Projeto FerragemGK</h1>
+
+<div align="center">
+<img src="Logo.png" width="200" alt="Exemplo">
+</div>
 
 # Parte 8: Movimento de Venda, Baixa de Estoque e Geração de Contas a Receber
 
